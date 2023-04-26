@@ -16,10 +16,10 @@ namespace Game
 
         //private Collitions collitions;
 
-        //public float RealHeight => currentAnimation.CurrentFrame.Height * transform.scale.y;
-        //public float RealWidth => currentAnimation.CurrentFrame.Width * transform.scale.x;
-        public float RealHeight => ship.Height * transform.scale.y;
-        public float RealWidth => ship.Width * transform.scale.x;
+        public float RealHeight => currentAnimation.CurrentFrame.Height * transform.scale.y;
+        public float RealWidth => currentAnimation.CurrentFrame.Width * transform.scale.x;
+        //public float RealHeight => ship.Height * transform.scale.y;
+        //public float RealWidth => ship.Width * transform.scale.x;
 
         //private Vector2 realSize = new Vector2(ship)
 
@@ -29,13 +29,13 @@ namespace Game
         Animation currentAnimation = null;
         Animation idle;
 
-        Texture ship = new Texture("Barco.png");
+        //Texture ship = new Texture("Barco.png");
 
 
         //CONSTRUCTOR DE PERSONAJES
         public Character(Vector2 initialPos)
         {
-            idle = CreateAnimation("Idle", "", 4, 2);
+            idle = CreateAnimation("Idle", "Barco", 3, 1);
             transform = new Transform(initialPos, 0, new Vector2(1, 1));
 
             currentAnimation = idle;// GetAnimation("Idle");
@@ -48,7 +48,7 @@ namespace Game
 
         public void Update()
         {
-            //currentAnimation.Update();
+            currentAnimation.Update();
 
             /*
             foreach (var bullet in Player.cannonBullets)
@@ -88,9 +88,9 @@ namespace Game
 
         public void Draw()
         {
-            //Engine.Draw(currentAnimation.CurrentFrame, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, 0, RealWidth / 2f, RealHeight / 2f);
+            Engine.Draw(currentAnimation.CurrentFrame, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, 0, RealWidth / 2f, RealHeight / 2f);
 
-            Engine.Draw(ship, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, 0, RealWidth / 2f, RealHeight / 2f);
+            //Engine.Draw(ship, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, 0, RealWidth / 2f, RealHeight / 2f);
         }
         
 
