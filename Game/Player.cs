@@ -25,6 +25,10 @@ namespace Game
         public float RealWidth => cannon.Width * transform.scale.x;
 
         private float p_speed;
+        private float attackSpeed = 0.5f;
+        private float timer = 0;
+
+        private bool attackCooldown = false;
 
 
 
@@ -37,6 +41,8 @@ namespace Game
 
         public void Update()
         {
+            timer += Program.deltaTime;
+
             Input();
 
             if (transform.position.x >= 825 - cannon.Width)
@@ -91,7 +97,36 @@ namespace Game
             }
             if (Engine.GetKey(Keys.SPACE))
             {
-                Shoot(new Vector2 (transform.position.x + 105, transform.position.y));
+
+                if (timer >= attackSpeed)
+                {
+                    attackCooldown = false;
+                    timer = 0;
+                }
+                else
+                {
+                    if (!attackCooldown)
+                    {
+                        Shoot(new Vector2(transform.position.x + 105, transform.position.y));
+                        attackCooldown = true;
+                    }
+                }
+
+                /*
+                if (!attackCooldown)
+                {
+                    Shoot(new Vector2(transform.position.x + 105, transform.position.y));
+                    attackCooldown = true;
+                }
+                else
+                {
+                    if (timer >= attackSpeed)
+                    {
+                        attackCooldown = false;
+                        timer = 0;
+                    }
+                }
+                */
                 //Engine.Debug("DISPARO");
             }
 
