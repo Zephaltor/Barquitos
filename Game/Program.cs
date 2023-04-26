@@ -68,7 +68,14 @@ namespace Game
 
                     jugador.Update();
 
-                    timer += deltaTime;
+                    var l_characters = CharactersManager.Instance.GetCharacters();
+                    foreach (var character in l_characters)
+                    {
+                        character.Update();
+                    }
+
+
+                        timer += deltaTime;
                     if (timer >= timeLimit)
                     {
                         gameStarted = false;
@@ -82,13 +89,7 @@ namespace Game
 
             
 
-            /*
-            var l_characters = CharactersManager.Instance.GetCharacters();
-            foreach (var character in l_characters)
-            {
-                character.Update();
-            }
-            */
+           
 
             //var l_boxCollider = BoxColliderManager.Instance.GetCollider();
             //Engine.Debug(l_boxCollider.Count);
