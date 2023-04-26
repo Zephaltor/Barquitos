@@ -74,8 +74,45 @@ namespace Game
                         character.Update();
                     }
 
+                    //var l_boxCollider = BoxColliderManager.Instance.GetCollider();
+                    //var l_circleCollider = CircleColliderManager.Instance.GetCollider();
+                    
+                    /*
+                    foreach (var boxCollider in l_boxCollider)
+                    {
+                        
+                        for (int i = 0; i < l_boxCollider.Count; i++)
+                        {
+                            if (boxCollider != l_boxCollider[i])
+                            {
 
-                        timer += deltaTime;
+                                foreach (var circleCollider in l_circleCollider)
+                                {
+
+                                    for (int e = 0; e < l_circleCollider.Count; e++)
+                                    {
+                                        if (circleCollider != l_circleCollider[e])
+                                        {
+                                            if (CircleToBoxCollition(boxCollider, circleCollider))
+                                            {
+                                                Engine.Debug("ESTOY COLICIONANDO");
+                                            }
+                                        }
+
+
+                                        
+                                    }
+                                }
+
+                            }
+                        }
+                        
+                          
+
+                    }
+                    */
+
+                    timer += deltaTime;
                     if (timer >= timeLimit)
                     {
                         gameStarted = false;
@@ -83,55 +120,55 @@ namespace Game
                     }
 
                 }
-                
+
             }
             else if (Engine.GetKey(Keys.K)) gameStarted = true;
 
-            
 
-           
 
-            //var l_boxCollider = BoxColliderManager.Instance.GetCollider();
-            //Engine.Debug(l_boxCollider.Count);
 
-            //var l_circleCollider = CircleColliderManager.Instance.GetCollider();
-            //Engine.Debug(l_circleCollider.Count);
 
-            //var l_boxCollider = BoxColliderManager.Instance.GetCollider();
-            //var l_circleCollider = CircleColliderManager.Instance.GetCollider();
-            /*
-            foreach (var boxCollider in l_boxCollider)
-            {
-                /*
-                foreach (var circleCollider in l_circleCollider)
-                {
-                
-                    for (int i = 0; i < l_circleCollider.Count; i++)
+                    //var l_boxCollider = BoxColliderManager.Instance.GetCollider();
+                    //Engine.Debug(l_boxCollider.Count);
+
+                    //var l_circleCollider = CircleColliderManager.Instance.GetCollider();
+                    //Engine.Debug(l_circleCollider.Count);
+
+                    //var l_boxCollider = BoxColliderManager.Instance.GetCollider();
+                    //var l_circleCollider = CircleColliderManager.Instance.GetCollider();
+                    /*
+                    foreach (var boxCollider in l_boxCollider)
                     {
-                        if (CircleToBoxCollition(boxCollider, l_circleCollider[i]))
+                        /*
+                        foreach (var circleCollider in l_circleCollider)
                         {
-                            Engine.Debug("ESTOY COLICIONANDO");
+
+                            for (int i = 0; i < l_circleCollider.Count; i++)
+                            {
+                                if (CircleToBoxCollition(boxCollider, l_circleCollider[i]))
+                                {
+                                    Engine.Debug("ESTOY COLICIONANDO");
+                                }
+                            }
+                        //}
+
+                    }
+                    */
+
+                    /*
+                    foreach (var boxCollider in l_boxCollider)
+                    {
+                        for (int i = 0; i < l_boxCollider.Count; i++)
+                        {
+                            if (boxCollider != l_boxCollider[i])
+                                if (BoxToBoxCollition(boxCollider, l_boxCollider[i]))
+                                {
+                                    Engine.Debug("ESTOY COLISIONANDO");
+                                }
                         }
                     }
-                //}
-
-            }
-            */
-
-            /*
-            foreach (var boxCollider in l_boxCollider)
-            {
-                for (int i = 0; i < l_boxCollider.Count; i++)
-                {
-                    if (boxCollider != l_boxCollider[i])
-                        if (BoxToBoxCollition(boxCollider, l_boxCollider[i]))
-                        {
-                            Engine.Debug("ESTOY COLISIONANDO");
-                        }
+                    */
                 }
-            }
-            */
-        }
 
         static void Draw()
         {
@@ -163,8 +200,8 @@ namespace Game
                 Engine.Show();
         }
 
-        /*
-        bool CircleToBoxCollition(BoxCollider box, CircleCollider circle)
+        
+        public static bool CircleToBoxCollition(BoxCollider box, CircleCollider circle)
         {
             float px = circle._position.x;
             if (circle._position.x < box._position.x) px = box._position.x;
@@ -186,7 +223,7 @@ namespace Game
             return false;
             //Engine.Debug(distance);
         }
-        */
+        
 
         public bool BoxToBoxCollition(BoxCollider p_objA, BoxCollider p_objB)
         {

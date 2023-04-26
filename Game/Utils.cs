@@ -32,7 +32,7 @@ namespace Game
         }
     }
 
-    public struct BoxCollider
+    public class BoxCollider
     {
         public Vector2 _position;
         public Vector2 _dimentions;
@@ -46,7 +46,7 @@ namespace Game
         }
     }
 
-    public struct CircleCollider
+    public class CircleCollider
     {
         public Vector2 _position;
         public float _radio;
