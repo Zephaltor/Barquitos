@@ -31,4 +31,32 @@ namespace Game
 
         }
     }
+
+    public struct BoxCollider
+    {
+        public Vector2 _position;
+        public Vector2 _dimentions;
+
+        public BoxCollider(Vector2 position, Vector2 dimentions)
+        {
+            _position = position;
+            _dimentions = dimentions;
+
+            BoxColliderManager.Instance.AddBoxCollider(this);
+        }
+    }
+
+    public struct CircleCollider
+    {
+        public Vector2 _position;
+        public float _radio;
+
+        public CircleCollider(Vector2 position, float radio)
+        {
+            _position = position;
+            _radio = radio;
+
+            CircleColliderManager.Instance.AddCircleCollider(this);
+        }
+    }
 }

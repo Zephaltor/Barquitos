@@ -6,33 +6,30 @@ namespace Game
 {
     public class Program
     {
-        //variables deltatime
         public static float deltaTime;
         static DateTime lastFrameTime = DateTime.Now;
 
-        //private Transform transform;
-
-        //static float _posY = 305;      /
-        //static float _posX = 305;      /Todo esto es para la bala
-        //static float _speed = 100;     /
-        
-
-        //static float _rot = 0;
+        //static Collitions collitions;
 
         static Character player;
         static Character ship;
-        //static Character secShip;
 
         static Player jugador;
 
-        //static List<Bullet> bullets = new List<Bullet>();
+        //static Collitions collitions;
 
         static Animation currentAnimation = null;
         static Animation idle;
 
-        //static Texture cannon = Engine.GetTexture("Cannon.png");
+        static bool gameStarted = false;
+        static bool victory = false;
+        static bool defeat = false;
 
-        //private float RealHeight => cannon.Height * transform.scale.y;
+        static float timer = 0;
+        static float timeLimit = 10;
+
+
+
 
 
         static void Main(string[] args)
@@ -41,14 +38,14 @@ namespace Game
             player = new Character(new Vector2(100,100));
             ship = new Character(new Vector2(150,100));
             jugador = new Player(new Vector2(400, 550), 200);
-            //secShip = new Character(new Vector2(400, 100));
+            
            
             idle = CreateAnimation();
             currentAnimation = idle;
 
 
 
-            SoundPlayer myplayer = new SoundPlayer("Sounds/XP.wav");
+            //SoundPlayer myplayer = new SoundPlayer("Sounds/XP.wav");
             //myplayer.PlayLooping();
 
             while (true)
@@ -62,80 +59,150 @@ namespace Game
 
         static void Update()
         {
-            ship.AddMove(new Vector2(20 * deltaTime, 0));
 
-            //Engine.Debug($"{RealHeight}");
+            if (gameStarted)
+            {
+                if (!victory && !defeat)
+                {
+                    ship.AddMove(new Vector2(20 * deltaTime, 0));
+
+                    jugador.Update();
+
+                    timer += deltaTime;
+                    if (timer >= timeLimit)
+                    {
+                        gameStarted = false;
+                        defeat = true;
+                    }
+
+                }
+                
+            }
+            else if (Engine.GetKey(Keys.K)) gameStarted = true;
+
             
-            //Engine.Debug(jugador);
 
             /*
-            if (Engine.GetKey(Keys.SPACE))
-            {
-               player.AddMove(new Vector2(10 * deltaTime, 10 * deltaTime));
-            }
-            */
-
-            jugador.Update();
-
-
-            /*
-            for (int i = 0; i < bullets.Count; i++)
-            {
-                bullets[i].Update();
-            }
-            */
-
             var l_characters = CharactersManager.Instance.GetCharacters();
             foreach (var character in l_characters)
             {
-                for (int i = 0; i < l_characters.Count; i++)
+                character.Update();
+            }
+            */
+
+            //var l_boxCollider = BoxColliderManager.Instance.GetCollider();
+            //Engine.Debug(l_boxCollider.Count);
+
+            //var l_circleCollider = CircleColliderManager.Instance.GetCollider();
+            //Engine.Debug(l_circleCollider.Count);
+
+            //var l_boxCollider = BoxColliderManager.Instance.GetCollider();
+            //var l_circleCollider = CircleColliderManager.Instance.GetCollider();
+            /*
+            foreach (var boxCollider in l_boxCollider)
+            {
+                /*
+                foreach (var circleCollider in l_circleCollider)
                 {
-                    if(character != l_characters[i])
-                        if (character.IsBoxColliding(l_characters[i]))
+                
+                    for (int i = 0; i < l_circleCollider.Count; i++)
+                    {
+                        if (CircleToBoxCollition(boxCollider, l_circleCollider[i]))
+                        {
+                            Engine.Debug("ESTOY COLICIONANDO");
+                        }
+                    }
+                //}
+
+            }
+            */
+
+            /*
+            foreach (var boxCollider in l_boxCollider)
+            {
+                for (int i = 0; i < l_boxCollider.Count; i++)
+                {
+                    if (boxCollider != l_boxCollider[i])
+                        if (BoxToBoxCollition(boxCollider, l_boxCollider[i]))
                         {
                             Engine.Debug("ESTOY COLISIONANDO");
                         }
                 }
-
-                character.Update();
             }
-
-            //currentAnimation.Update();
-            //ship.Update();
-            //pp.Update();
+            */
         }
 
         static void Draw()
         {
             Engine.Clear();
-        
-            Engine.Draw("Playa.png", 0, 0, 1, 0.8f);
 
-            jugador.Draw();
-            
-            foreach (var character in CharactersManager.Instance.GetCharacters())
+            if (gameStarted)
             {
-                character.Draw();
-            }
-           
-            /*
-            for (int i = 0; i < bullets.Count; i++)
-            {
-                if (!bullets[i].Draw)
+                
+                    Engine.Draw("Playa.png", 0, 0, 1, 0.8f);
+
+                jugador.Draw();
+
+                foreach (var character in CharactersManager.Instance.GetCharacters())
                 {
-                    bullets.RemoveAt(i);
+                    character.Draw();
                 }
             }
+            else Engine.Draw("Inicio.png", 0, 0, 1, 1, 0, 0, 0.8f);
 
-            
-            for (int i = 0; i < bullets.Count; i++)
+            if (victory)
             {
-                bullets[i].DrawBullet();
+                Engine.Draw("Victoria.png", 0, 0, 1, 1, 0, 0, 0.8f);
             }
-            */
+            else if (defeat)
+            {
+                Engine.Draw("Derrota.png", 0, 0, 1, 1, 0, 0, 0.8f);
+            }
 
-            Engine.Show();
+                Engine.Show();
         }
+
+        /*
+        bool CircleToBoxCollition(BoxCollider box, CircleCollider circle)
+        {
+            float px = circle._position.x;
+            if (circle._position.x < box._position.x) px = box._position.x;
+            else if (circle._position.x > box._position.x + box._dimentions.x / 2) px = box._position.x + box._dimentions.x / 2;
+
+            float py = circle._position.y;
+            if (circle._position.y < box._position.y) px = box._position.y;
+            else if (circle._position.y > box._position.y + box._dimentions.y / 2) px = box._position.y + box._dimentions.y / 2;
+
+            float distanceX = circle._position.x - px;
+            float distanceY = circle._position.y - py;
+
+            float distance = (float)Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+
+            if (distance <= circle._radio)
+            {
+                return true;
+            }
+            return false;
+            //Engine.Debug(distance);
+        }
+        */
+
+        public bool BoxToBoxCollition(BoxCollider p_objA, BoxCollider p_objB)
+        {
+            float distanceX = Math.Abs(p_objA._position.x - p_objB._position.x);
+            float distanceY = Math.Abs(p_objA._position.y - p_objB._position.y);
+
+            float sumHalfWidths = p_objA._dimentions.x / 2 + p_objB._dimentions.x / 2;
+            float sumHalfHeights = p_objA._dimentions.y / 2 + p_objB._dimentions.y / 2;
+
+            if (distanceX <= sumHalfWidths && distanceY <= sumHalfHeights)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        
 
         static void calcDeltatime()
         {
@@ -143,13 +210,6 @@ namespace Game
             deltaTime = (float)deltaSpan.TotalSeconds;
             lastFrameTime = DateTime.Now;
         }
-
-        /*  ESTO DISPARA UNA BALA
-        static void Shoot()
-        {
-            bullets.Add(new Bullet(_posX + 230, _posY + 60, _rot));
-        }
-        */
 
         private static Animation CreateAnimation()
         {

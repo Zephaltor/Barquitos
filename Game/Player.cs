@@ -10,16 +10,12 @@ namespace Game
     {
         private Transform transform;
 
-        private Player player;
-
-        //private Program program;
-
-        //private Bullet bullets;
-        static List<Bullet> bullets = new List<Bullet>();
+        static public List<Bullet> cannonBullets = new List<Bullet>();
 
         Texture cannon = new Texture("Cannon.png");
 
         private static float bulletSpeed = 400;
+        private static float bulletSizeMod = 0.5f;
 
         public float RealHeight => cannon.Height * transform.scale.y;
         public float RealWidth => cannon.Width * transform.scale.x;
@@ -54,9 +50,9 @@ namespace Game
                 transform.position.x = -25 + cannon.Width;
             }
 
-            for (int i = 0; i < bullets.Count; i++)
+            for (int i = 0; i < cannonBullets.Count; i++)
             {
-                bullets[i].Update();
+                cannonBullets[i].Update();
             }
         }
 
@@ -64,17 +60,17 @@ namespace Game
         {
             Engine.Draw(cannon, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, 0, RealWidth / 2, RealHeight / 2);
 
-            for (int i = 0; i < bullets.Count; i++)
+            for (int i = 0; i < cannonBullets.Count; i++)
             {
-                if (!bullets[i].Draw)
+                if (!cannonBullets[i].Draw)
                 {
-                    bullets.RemoveAt(i);
+                    cannonBullets.RemoveAt(i);
                 }
             }
 
-            for (int i = 0; i < bullets.Count; i++)
+            for (int i = 0; i < cannonBullets.Count; i++)
             {
-                bullets[i].DrawBullet();
+                cannonBullets[i].DrawBullet();
             }
             
         }
@@ -107,35 +103,20 @@ namespace Game
                 {
                     if (!attackCooldown)
                     {
-                        Shoot(new Vector2(transform.position.x + 105, transform.position.y));
+                        Shoot(new Vector2(transform.position.x, transform.position.y));
                         attackCooldown = true;
                     }
                 }
-
-                /*
-                if (!attackCooldown)
-                {
-                    Shoot(new Vector2(transform.position.x + 105, transform.position.y));
-                    attackCooldown = true;
-                }
-                else
-                {
-                    if (timer >= attackSpeed)
-                    {
-                        attackCooldown = false;
-                        timer = 0;
-                    }
-                }
-                */
-                //Engine.Debug("DISPARO");
             }
+
+            //Engine.GetKey(Keys.)
 
         }
 
         
         static void Shoot(Vector2 position)
         {
-            bullets.Add(new Bullet(position, bulletSpeed));
+            cannonBullets.Add(new Bullet(new Vector2(position.x, position.y - 20), bulletSpeed, bulletSizeMod));
         }
         
     }

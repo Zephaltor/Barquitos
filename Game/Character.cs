@@ -12,12 +12,16 @@ namespace Game
 
         private Transform transform;
 
-        //private float speed = 0;
+        public BoxCollider collider;
+
+        //private Collitions collitions;
 
         //public float RealHeight => currentAnimation.CurrentFrame.Height * transform.scale.y;
         //public float RealWidth => currentAnimation.CurrentFrame.Width * transform.scale.x;
         public float RealHeight => ship.Height * transform.scale.y;
         public float RealWidth => ship.Width * transform.scale.x;
+
+        //private Vector2 realSize = new Vector2(ship)
 
 
         public Transform Transform => transform;
@@ -37,12 +41,49 @@ namespace Game
             currentAnimation = idle;// GetAnimation("Idle");
             currentAnimation.Reset();
 
+            collider = new BoxCollider(transform.position, new Vector2(RealWidth, RealHeight));
+
             CharactersManager.Instance.AddCharacter(this);
         }
 
         public void Update()
         {
-            currentAnimation.Update();
+            //currentAnimation.Update();
+
+            /*
+            foreach (var bullet in Player.cannonBullets)
+            {
+                for (int i = 0; i < Player.cannonBullets.Count; i ++)
+                {
+
+                }
+            }
+            
+            foreach (var bullet in Player.cannonBullets)
+            {
+                for (int i = 0; i < Player.cannonBullets.Count; i++)
+                {
+                    if (Collitions.CircleToBoxCollition(transform, new Vector2(RealWidth, RealHeight), Player.cannonBullets[i].transform, Player.cannonBullets[i].Radius))
+                    {
+                        Engine.Debug("ESTOR COLICIONANDO");
+                    }
+                }
+            }
+            */
+            /*
+            var l_bullet = BulletManager.Instance.GetBullet();
+            foreach (var bullet in l_bullet)
+            {
+                for (int i = 0; i < l_bullet.Count; i++)
+                {
+                    if (collitions.CircleToBoxCollition(transform, new Vector2(RealWidth, RealHeight), l_bullet[i].transform, l_bullet[i].Radius))
+                    {
+                        Engine.Debug("ESTOR COLICIONANDO");
+                    }
+                }
+            }
+            */
+            //if (Collitions.CircleToBoxCollition(transform, new Vector2(RealWidth, RealHeight))
         }
 
         public void Draw()
