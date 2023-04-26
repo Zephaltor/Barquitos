@@ -10,18 +10,21 @@ namespace Game
     {
         private Transform transform;
 
+        private Player player;
+
         //private Program program;
 
-        private Bullet bullets;
+        //private Bullet bullets;
+        static List<Bullet> bullets = new List<Bullet>();
 
         Texture cannon = new Texture("Cannon.png");
+
+        private static float bulletSpeed = 400;
 
         public float RealHeight => cannon.Height * transform.scale.y;
         public float RealWidth => cannon.Width * transform.scale.x;
 
         private float p_speed;
-
-
 
 
 
@@ -44,11 +47,30 @@ namespace Game
             {
                 transform.position.x = -25 + cannon.Width;
             }
+
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                bullets[i].Update();
+            }
         }
 
         public void Draw()
         {
             Engine.Draw(cannon, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, 0, RealWidth / 2, RealHeight / 2);
+
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                if (!bullets[i].Draw)
+                {
+                    bullets.RemoveAt(i);
+                }
+            }
+
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                bullets[i].DrawBullet();
+            }
+            
         }
 
         public void Move(float velocity)
@@ -67,13 +89,19 @@ namespace Game
             {
                 Move(-p_speed);
             }
+            if (Engine.GetKey(Keys.SPACE))
+            {
+                Shoot(new Vector2 (transform.position.x + 105, transform.position.y));
+                //Engine.Debug("DISPARO");
+            }
+
         }
 
-        /*
-        static void Shoot()
+        
+        static void Shoot(Vector2 position)
         {
-            bullets.Add(new Bullet(_posX + 230, _posY + 60, _rot));
+            bullets.Add(new Bullet(position, bulletSpeed));
         }
-        */
+        
     }
 }

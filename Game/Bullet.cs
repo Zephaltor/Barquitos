@@ -8,22 +8,24 @@ namespace Game
 {
     public class Bullet
     {
-        float _speed = 150;
-        float _posX = 0;
-        float _posY = 0;
-        float _rot = 0;
+        //private Player player;
 
-        float lifeTime = 1;
-        float timer = 0;
+        private float _speed = 150;
+        private float _posX = 0;
+        private float _posY = 0;
+        private float _rot = 0;
 
-        bool draw = true;
+        private float lifeTime = 3;
+        private float timer = 0;
+
+        private bool draw = true;
 
         public bool Draw => draw;
 
-        public Bullet(float posX, float posY, float speed)
+        public Bullet(Vector2 position, float speed)
         {
-            _posX = posX;
-            _posY = posY;
+            _posX = position.x;
+            _posY = position.y;
             _speed = speed;
             //_rot = rot;
         }
@@ -43,8 +45,9 @@ namespace Game
         public void DrawBullet()
         {
             if (draw)
-                Engine.Draw("0.png", _posX, _posY, .25f, .25f, _rot, 145.5f, 86.5f);
+                Engine.Draw("ship.png", _posX, _posY, .25f, .25f, _rot, 145.5f, 86.5f);
         }
+
 
     }
 }

@@ -15,6 +15,7 @@ namespace Game
         //static float _posY = 305;      /
         //static float _posX = 305;      /Todo esto es para la bala
         //static float _speed = 100;     /
+        
 
         //static float _rot = 0;
 
@@ -24,7 +25,7 @@ namespace Game
 
         static Player jugador;
 
-        static List<Bullet> bullets = new List<Bullet>();
+        //static List<Bullet> bullets = new List<Bullet>();
 
         static Animation currentAnimation = null;
         static Animation idle;
@@ -67,19 +68,22 @@ namespace Game
             
             //Engine.Debug(jugador);
 
+            /*
             if (Engine.GetKey(Keys.SPACE))
             {
                player.AddMove(new Vector2(10 * deltaTime, 10 * deltaTime));
             }
+            */
 
             jugador.Update();
 
 
-
+            /*
             for (int i = 0; i < bullets.Count; i++)
             {
                 bullets[i].Update();
             }
+            */
 
             var l_characters = CharactersManager.Instance.GetCharacters();
             foreach (var character in l_characters)
@@ -114,6 +118,7 @@ namespace Game
                 character.Draw();
             }
            
+            /*
             for (int i = 0; i < bullets.Count; i++)
             {
                 if (!bullets[i].Draw)
@@ -127,7 +132,7 @@ namespace Game
             {
                 bullets[i].DrawBullet();
             }
-            
+            */
 
             Engine.Show();
         }
