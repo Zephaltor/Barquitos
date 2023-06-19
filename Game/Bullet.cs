@@ -12,9 +12,11 @@ namespace Game
 
         Texture bullet = new Texture("Bala.png");
 
-        public Transform transform;
+        private Transform transform;
 
-        public CircleCollider collider;
+        public Transform Transf => transform;
+
+        //public CircleCollider collider;
 
         public float RealHeight => bullet.Height * transform.scale.y;
         public float RealWidth => bullet.Width * transform.scale.x;
@@ -39,9 +41,10 @@ namespace Game
             transform = new Transform(position, 0, new Vector2(1, 1));
             _speed = speed;
             _sizeMod = sizeMod;
+            BulletManager.Instance.AddBullet(this);
             //_rot = rot;
 
-            collider = new CircleCollider(transform.position, Radius);
+            //collider = new CircleCollider(transform.position, Radius);
         }
 
         public void Update()

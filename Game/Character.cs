@@ -12,7 +12,9 @@ namespace Game
 
         private Transform transform;
 
-        public BoxCollider collider;
+        public Transform Transf => transform;
+
+        //public BoxCollider collider;
 
         //private Collitions collitions;
 
@@ -29,6 +31,8 @@ namespace Game
         Animation currentAnimation = null;
         Animation idle;
 
+        private bool alive = true;
+
         //Texture ship = new Texture("Barco.png");
 
 
@@ -41,13 +45,18 @@ namespace Game
             currentAnimation = idle;// GetAnimation("Idle");
             currentAnimation.Reset();
 
-            collider = new BoxCollider(transform.position, new Vector2(RealWidth, RealHeight));
+            //collider = new BoxCollider(transform.position, new Vector2(RealWidth, RealHeight));
 
             CharactersManager.Instance.AddCharacter(this);
         }
 
         public void Update()
         {
+            if (!alive)
+            {
+                return;
+            }
+
             currentAnimation.Update();
 
             /*
@@ -88,6 +97,11 @@ namespace Game
 
         public void Draw()
         {
+            if (!alive)
+            {
+                return;
+            }
+
             Engine.Draw(currentAnimation.CurrentFrame, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, 0, RealWidth / 2f, RealHeight / 2f);
 
             //Engine.Draw(ship, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, 0, RealWidth / 2f, RealHeight / 2f);
@@ -141,7 +155,8 @@ namespace Game
 
         public void Kill()
         {
-
+            alive = false;
+            CharactersManager.Instance.RemoveCharacter(this);
         }
 
         /*

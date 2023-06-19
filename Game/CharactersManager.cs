@@ -17,6 +17,11 @@ namespace Game
             characters.Add(p_newCharacter);
         }
 
+        public void RemoveCharacter(Character p_newCharacter)
+        {
+            characters.Remove(p_newCharacter);
+        }
+
         public List<Character> GetCharacters()
         {
             List<Character> chars = new List<Character>(characters);
