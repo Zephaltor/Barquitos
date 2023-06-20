@@ -30,7 +30,10 @@ namespace Game
         private float lifeTime = 3;
         private float timer = 0;
 
-        public float Radius => RealHeight / 2;
+        private bool alive = true;
+
+        //public float Radius => RealHeight / 2;
+
 
         private bool draw = true;
 
@@ -42,31 +45,40 @@ namespace Game
             _speed = speed;
             _sizeMod = sizeMod;
             BulletManager.Instance.AddBullet(this);
-            //_rot = rot;
-
-            //collider = new CircleCollider(transform.position, Radius);
         }
 
         public void Update()
         {
+            if (!alive)
+            {
+                return;
+            }
+
             transform.position.y -= _speed * Program.deltaTime;
 
             timer += Program.deltaTime;
 
             if (timer >= lifeTime)
             {
-                draw = false;
+                alive = false;
             }
-
-            //BulletManager.Instance.AddBullet(this);
         }
 
         public void DrawBullet()
         {
-            if (draw)
+            if (!alive)
+            {
+                return;
+            }
+
+            //if (draw)
                 Engine.Draw(bullet, transform.position.x, transform.position.y, 1 * _sizeMod, 1 * _sizeMod, _rot, RealWidth/2, RealHeight/2);
         }
 
-
+        public void Kill()
+        {
+            alive = false;
+            BulletManager.Instance.RemoveBullet(this);
+        }
     }
 }

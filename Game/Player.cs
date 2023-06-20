@@ -84,7 +84,6 @@ namespace Game
         {
             if (Engine.GetKey(Keys.D))
             {
-
                 Move(p_speed);
             }
             if (Engine.GetKey(Keys.A))
@@ -108,9 +107,6 @@ namespace Game
                     }
                 }
             }
-
-            //Engine.GetKey(Keys.)
-
         }
 
         

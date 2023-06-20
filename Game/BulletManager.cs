@@ -17,6 +17,11 @@ namespace Game
             bullets.Add(p_newBullet);
         }
 
+        public void RemoveBullet(Bullet p_newBullet)
+        {
+            bullets.Remove(p_newBullet);
+        }
+
         public List<Bullet> GetBullet()
         {
             List<Bullet> bull = new List<Bullet>(bullets);

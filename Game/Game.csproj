@@ -42,8 +42,7 @@
     <Compile Include="BulletManager.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CharactersManager.cs" />
-    <Compile Include="BoxColliderManager.cs" />
-    <Compile Include="CircleColliderManager.cs" />
+    <Compile Include="Collitions.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="MenuManager.cs" />

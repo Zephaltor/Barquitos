@@ -9,17 +9,12 @@ namespace Game
         public static float deltaTime;
         static DateTime lastFrameTime = DateTime.Now;
 
-        //static Collitions collitions;
-
         static Character player;
         static Character ship;
 
         static Player jugador;
 
-        //static Collitions collitions;
-
-        static Animation currentAnimation = null;
-        static Animation idle;
+        static Collitions collitions;
 
         static bool gameStarted = false;
         static bool victory = false;
@@ -38,15 +33,8 @@ namespace Game
             player = new Character(new Vector2(100,100));
             ship = new Character(new Vector2(150,100));
             jugador = new Player(new Vector2(400, 550), 200);
-            
-           
-            idle = CreateAnimation();
-            currentAnimation = idle;
 
-
-
-            //SoundPlayer myplayer = new SoundPlayer("Sounds/XP.wav");
-            //myplayer.PlayLooping();
+            collitions = new Collitions();
 
             while (true)
             {
@@ -68,6 +56,7 @@ namespace Game
 
                     jugador.Update();
 
+                    /*
                     var l_bullet = BulletManager.Instance.GetBullet();
                     var l_characters = CharactersManager.Instance.GetCharacters();
                     foreach (var character in l_characters)
@@ -84,44 +73,14 @@ namespace Game
 
                         character.Update();
                     }
-
-                    //var l_boxCollider = BoxColliderManager.Instance.GetCollider();
-                    //var l_circleCollider = CircleColliderManager.Instance.GetCollider();
-
-                    /*
-                    foreach (var boxCollider in l_boxCollider)
-                    {
-                        
-                        for (int i = 0; i < l_boxCollider.Count; i++)
-                        {
-                            if (boxCollider != l_boxCollider[i])
-                            {
-
-                                foreach (var circleCollider in l_circleCollider)
-                                {
-
-                                    for (int e = 0; e < l_circleCollider.Count; e++)
-                                    {
-                                        if (circleCollider != l_circleCollider[e])
-                                        {
-                                            if (CircleToBoxCollition(boxCollider, circleCollider))
-                                            {
-                                                Engine.Debug("ESTOY COLICIONANDO");
-                                            }
-                                        }
-
-
-                                        
-                                    }
-                                }
-
-                            }
-                        }
-                        
-                          
-
-                    }
                     */
+                    var l_characters = CharactersManager.Instance.GetCharacters();
+                    foreach (var character in l_characters)
+                    {
+                        character.Update();
+                    }
+
+                    collitions.Update();
 
                     timer += deltaTime;
                     if (timer >= timeLimit)
@@ -134,52 +93,7 @@ namespace Game
 
             }
             else if (Engine.GetKey(Keys.K)) gameStarted = true;
-
-
-
-
-
-                    //var l_boxCollider = BoxColliderManager.Instance.GetCollider();
-                    //Engine.Debug(l_boxCollider.Count);
-
-                    //var l_circleCollider = CircleColliderManager.Instance.GetCollider();
-                    //Engine.Debug(l_circleCollider.Count);
-
-                    //var l_boxCollider = BoxColliderManager.Instance.GetCollider();
-                    //var l_circleCollider = CircleColliderManager.Instance.GetCollider();
-                    /*
-                    foreach (var boxCollider in l_boxCollider)
-                    {
-                        /*
-                        foreach (var circleCollider in l_circleCollider)
-                        {
-
-                            for (int i = 0; i < l_circleCollider.Count; i++)
-                            {
-                                if (CircleToBoxCollition(boxCollider, l_circleCollider[i]))
-                                {
-                                    Engine.Debug("ESTOY COLICIONANDO");
-                                }
-                            }
-                        //}
-
-                    }
-                    */
-
-                    /*
-                    foreach (var boxCollider in l_boxCollider)
-                    {
-                        for (int i = 0; i < l_boxCollider.Count; i++)
-                        {
-                            if (boxCollider != l_boxCollider[i])
-                                if (BoxToBoxCollition(boxCollider, l_boxCollider[i]))
-                                {
-                                    Engine.Debug("ESTOY COLISIONANDO");
-                                }
-                        }
-                    }
-                    */
-                }
+        }
 
         static void Draw()
         {
@@ -208,32 +122,9 @@ namespace Game
                 Engine.Draw("Derrota.png", 0, 0, 1, 1, 0, 0, 0.8f);
             }
 
-                Engine.Show();
+            Engine.Show();
         }
 
-        
-        public static bool CircleToBoxCollition(BoxCollider box, CircleCollider circle)
-        {
-            float px = circle._position.x;
-            if (circle._position.x < box._position.x) px = box._position.x;
-            else if (circle._position.x > box._position.x + box._dimentions.x / 2) px = box._position.x + box._dimentions.x / 2;
-
-            float py = circle._position.y;
-            if (circle._position.y < box._position.y) px = box._position.y;
-            else if (circle._position.y > box._position.y + box._dimentions.y / 2) px = box._position.y + box._dimentions.y / 2;
-
-            float distanceX = circle._position.x - px;
-            float distanceY = circle._position.y - py;
-
-            float distance = (float)Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
-
-            if (distance <= circle._radio)
-            {
-                return true;
-            }
-            return false;
-            //Engine.Debug(distance);
-        }
 
         public static bool BoxToBoxCollition(Vector2 positionA, Vector2 sizeA, Vector2 positionB, Vector2 sizeB)
         {
@@ -250,44 +141,11 @@ namespace Game
             return false;
         }
 
-        /*
-        public bool BoxToBoxCollition(BoxCollider p_objA, BoxCollider p_objB)
-        {
-            float distanceX = Math.Abs(p_objA._position.x - p_objB._position.x);
-            float distanceY = Math.Abs(p_objA._position.y - p_objB._position.y);
-
-            float sumHalfWidths = p_objA._dimentions.x / 2 + p_objB._dimentions.x / 2;
-            float sumHalfHeights = p_objA._dimentions.y / 2 + p_objB._dimentions.y / 2;
-
-            if (distanceX <= sumHalfWidths && distanceY <= sumHalfHeights)
-            {
-                return true;
-            }
-            return false;
-        }
-        */
-
-
         static void calcDeltatime()
         {
             TimeSpan deltaSpan = DateTime.Now - lastFrameTime;
             deltaTime = (float)deltaSpan.TotalSeconds;
             lastFrameTime = DateTime.Now;
-        }
-
-        private static Animation CreateAnimation()
-        {
-            // Idle Animation
-            List<Texture> idleFrames = new List<Texture>();
-
-            for (int i = 0; i < 4; i++)
-            {
-                idleFrames.Add(Engine.GetTexture($"{i}.png"));
-            }
-
-            Animation idleAnimation = new Animation("Idle", idleFrames, 2, true);
-
-            return idleAnimation;
         }
     }
 }
