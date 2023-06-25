@@ -6,36 +6,57 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    class Player
+    public interface IDisparable
     {
-        private Transform transform;
+        float AttackSpeed { get; }
+        float Timer { get; }
 
+        bool AttackCooldown { get; }
+
+
+        void Shoot();
+    }
+
+    public interface IMovible
+    {
+        void AddMove();
+    }
+
+    class Player : GameObject, IDisparable
+    {
         static public List<Bullet> cannonBullets = new List<Bullet>();
 
         Texture cannon = new Texture("Cannon.png");
 
         private static float bulletSpeed = 400;
-        private static float bulletSizeMod = 0.5f;
-
-        public float RealHeight => cannon.Height * transform.scale.y;
-        public float RealWidth => cannon.Width * transform.scale.x;
 
         private float p_speed;
+
         private float attackSpeed = 0.5f;
         private float timer = 0;
 
         private bool attackCooldown = false;
 
+        public float AttackSpeed => attackSpeed;
+        public float Timer => timer;
 
+        public bool AttackCooldown => attackCooldown;
 
-        public Player(Vector2 initialPos,  float speed)
+        public Player(string p_id, Vector2 initialPos, float speed) : base(p_id)
         {
             transform = new Transform(initialPos, 0, new Vector2(1, 1));
 
+            List<Texture> list = new List<Texture>();
+            list.Add(cannon);
+
+            currentAnimation = new Animation("cannon", list, 0, true);
+
             p_speed = speed;
+
+            CharactersManager.Instance.AddCharacter(this);
         }
 
-        public void Update()
+        public override void Update()
         {
             timer += Program.deltaTime;
 
@@ -56,23 +77,9 @@ namespace Game
             }
         }
 
-        public void Draw()
+        public override void Draw()
         {
             Engine.Draw(cannon, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, 0, RealWidth / 2, RealHeight / 2);
-
-            for (int i = 0; i < cannonBullets.Count; i++)
-            {
-                if (!cannonBullets[i].Draw)
-                {
-                    cannonBullets.RemoveAt(i);
-                }
-            }
-
-            for (int i = 0; i < cannonBullets.Count; i++)
-            {
-                cannonBullets[i].DrawBullet();
-            }
-            
         }
 
         public void Move(float velocity)
@@ -102,18 +109,17 @@ namespace Game
                 {
                     if (!attackCooldown)
                     {
-                        Shoot(new Vector2(transform.position.x, transform.position.y));
+                        Shoot();
                         attackCooldown = true;
                     }
                 }
             }
         }
 
-        
-        static void Shoot(Vector2 position)
+        public void Shoot()
         {
-            cannonBullets.Add(new Bullet(new Vector2(position.x, position.y - 20), bulletSpeed, bulletSizeMod));
+            var bullet = BulletFactory.CreateBullet(BulletSize.huge, "bulletCannon", transform, bulletSpeed);
+            cannonBullets.Add(bullet);
         }
-        
     }
 }

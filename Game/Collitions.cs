@@ -11,21 +11,31 @@ namespace Game
         public void Update()
         {
             //COLICIONES BALA - BARCOS
-            var l_bullet = BulletManager.Instance.GetBullet();
             var l_characters = CharactersManager.Instance.GetCharacters();
             foreach (var character in l_characters)
             {
-                foreach (var bullet in l_bullet)
+                foreach (var char2 in l_characters)
                 {
-                    if (BoxToBoxCollition(character.Transf.position, new Vector2(character.RealWidth, character.RealHeight), bullet.Transf.position, new Vector2(bullet.RealWidth, bullet.RealHeight)))
+
+                    if (character.ID == "bote" && char2.ID == "bulletCannon")
                     {
-                        Engine.Debug("IMPACTO A ESTRIBOR");
-                        character.Kill();
-                        bullet.Kill();
+                        if (BoxToBoxCollition(character.Transf.position, new Vector2(character.RealWidth, character.RealHeight), char2.Transf.position, new Vector2(char2.RealWidth, char2.RealHeight)))
+                        {
+                            //Engine.Debug("IMPACTO A ESTRIBOR");
+                            character.Kill();
+                            char2.Kill();
+                        }
+                    }
+                    if (character.ID == "cannon" && char2.ID == "bulletBote")
+                    {
+                        if (BoxToBoxCollition(character.Transf.position, new Vector2(character.RealWidth, character.RealHeight), char2.Transf.position, new Vector2(char2.RealWidth, char2.RealHeight)))
+                        {
+                            Engine.Debug("Ouch");
+                            
+                            char2.Kill();
+                        }
                     }
                 }
-
-                //character.Update();
             }
         }
 

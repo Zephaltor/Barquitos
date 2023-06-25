@@ -10,21 +10,21 @@ namespace Game
     {
         private static CharactersManager instance;
 
-        private List<Character> characters = new List<Character>();
+        private List<GameObject> characters = new List<GameObject>();
 
-        public void AddCharacter(Character p_newCharacter)
+        public void AddCharacter(GameObject p_newCharacter)
         {
             characters.Add(p_newCharacter);
         }
 
-        public void RemoveCharacter(Character p_newCharacter)
+        public void RemoveCharacter(GameObject p_newCharacter)
         {
             characters.Remove(p_newCharacter);
         }
 
-        public List<Character> GetCharacters()
+        public List<GameObject> GetCharacters()
         {
-            List<Character> chars = new List<Character>(characters);
+            List<GameObject> chars = new List<GameObject>(characters);
             return chars;
         }
 

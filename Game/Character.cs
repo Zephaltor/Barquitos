@@ -6,31 +6,38 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public class Character
+    public class Character : GameObject, IDisparable
     {
-        //private float life = 100f;
-
-        private Transform transform;
-
-        public Transform Transf => transform;
-
-        public float RealHeight => currentAnimation.CurrentFrame.Height * transform.scale.y;
-        public float RealWidth => currentAnimation.CurrentFrame.Width * transform.scale.x;
-
-        public Transform Transform => transform;
-
-        Animation currentAnimation = null;
         Animation idle;
 
+        private float speed = 40;
+
+        private float attackSpeed = 1.5f;
+        private float timer = 0;
+
         private bool alive = true;
+        private bool attackCooldown = true;
 
+        public float AttackSpeed => attackSpeed;
+        public float Timer => timer;
 
+        public bool AttackCooldown => attackCooldown;
 
         //CONSTRUCTOR DE PERSONAJES
-        public Character(Vector2 initialPos)
+        public Character(string p_id, Vector2 initialPos, bool rightMovment) : base(p_id)
         {
+            float l_rotation = 0;
+
+            if (!rightMovment)
+            {
+                speed = -speed;
+                l_rotation = 180;
+            }
+
+            //scale = 1;
+
             idle = CreateAnimation("Idle", "Barco", 3, 1);
-            transform = new Transform(initialPos, 0, new Vector2(1, 1));
+            transform = new Transform(initialPos, l_rotation, new Vector2(1, 1));
 
             currentAnimation = idle;
             currentAnimation.Reset();
@@ -38,24 +45,42 @@ namespace Game
             CharactersManager.Instance.AddCharacter(this);
         }
 
-        public void Update()
+        public override void Update()
         {
             if (!alive)
             {
                 return;
             }
+
+            timer += Program.deltaTime;
+
+            if (timer >= attackSpeed)
+            {
+                attackCooldown = false;
+                timer = 0;
+            }
+            else
+            {
+                if (!attackCooldown)
+                {
+                    Shoot();
+                    attackCooldown = true;
+                }
+            }
+
+            AddMove(new Vector2(speed * Program.deltaTime, 0));
 
             currentAnimation.Update();
         }
 
-        public void Draw()
+        public override void Draw()
         {
             if (!alive)
             {
                 return;
             }
 
-            Engine.Draw(currentAnimation.CurrentFrame, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, 0, RealWidth / 2f, RealHeight / 2f);
+            Engine.Draw(currentAnimation.CurrentFrame, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, transform.rotation, RealWidth / 2f, RealHeight / 2f);
         }
         
 
@@ -81,17 +106,15 @@ namespace Game
             transform.position.y += pos.y;
         }
 
-        /*
-        public void DamageLife(int damage)
-        {
-            life -= damage;
-        }
-        */
-
-        public void Kill()
+        public override void Kill()
         {
             alive = false;
             CharactersManager.Instance.RemoveCharacter(this);
+        }
+
+        public void Shoot()
+        {
+            BulletFactory.CreateBullet(BulletSize.normal, "bulletBote", transform, -250);
         }
     }
 }
