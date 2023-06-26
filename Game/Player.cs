@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    //public class
+    //public class GameManager
+    //{
+    //    private Player player = new Player("cannon", new Vector2(400, 550), 200);
+
+    //    player
+    //    //Player.OnLifeChanged
+    //}
     
     public class Player : GameObject, IDisparable, IDamageable
     {
-        static public List<Bullet> cannonBullets = new List<Bullet>();
+        //static public List<Bullet> cannonBullets = new List<Bullet>();
 
         Texture cannon = new Texture("Cannon.png");
 
@@ -25,6 +31,8 @@ namespace Game
 
         private bool attackCooldown = false;
         private bool alive = true;
+
+
 
         public event OnLifeChanged OnLifeChanged;
         public event OnKilled OnKilled;
@@ -70,10 +78,10 @@ namespace Game
                 transform.position.x = -25 + cannon.Width;
             }
 
-            for (int i = 0; i < cannonBullets.Count; i++)
-            {
-                cannonBullets[i].Update();
-            }
+            //for (int i = 0; i < cannonBullets.Count; i++)
+            //{
+            //    cannonBullets[i].Update();
+            //}
         }
 
         public override void Draw()
@@ -117,8 +125,8 @@ namespace Game
 
         public void Shoot()
         {
-            var bullet = BulletFactory.CreateBullet(BulletSize.tiny, "bulletCannon", transform, bulletSpeed);
-            cannonBullets.Add(bullet);
+            BulletFactory.CreateBullet(BulletSize.tiny, "bulletCannon", transform, bulletSpeed);
+            //cannonBullets.Add(bullet);
         }
 
         public override void Kill()

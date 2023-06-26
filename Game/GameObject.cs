@@ -8,6 +8,8 @@ namespace Game
 {
     public abstract class GameObject
     {
+        //static public List<Bullet> cannonBullets = new List<Bullet>();
+
         private string id;
         protected Transform transform;
         protected Animation currentAnimation;

@@ -27,7 +27,7 @@ namespace Game
                     {
                         if (BoxToBoxCollition(character.Transf.position, new Vector2(character.RealWidth, character.RealHeight), char2.Transf.position, new Vector2(char2.RealWidth, char2.RealHeight)))
                         {
-                            //Engine.Debug("IMPACTO A ESTRIBOR");
+                            Engine.Debug("IMPACTO A ESTRIBOR");
                             character.Kill();
                             char2.Kill();
                         }
@@ -36,10 +36,10 @@ namespace Game
                     {
                         if (BoxToBoxCollition(character.Transf.position, new Vector2(character.RealWidth, character.RealHeight), char2.Transf.position, new Vector2(char2.RealWidth, char2.RealHeight)))
                         {
+                            char2.Kill();
+
                             Engine.Debug("Ouch");
                             character.GetDamage();
-
-                            char2.Kill();
                         }
                     }
                 }

@@ -15,7 +15,7 @@ namespace Game
 
         bool IsAlive { get; set; }
 
-        event OnLifeChanged OnLifeChanged;
+        //event OnLifeChanged OnLifeChanged;
         event OnKilled OnKilled;
 
         //void GetDamage(int p_damage);

@@ -101,13 +101,6 @@ namespace Game
             return animation;
         }
 
-
-        //public void AddMove(Vector2 pos)
-        //{
-        //    transform.position.x += pos.x;
-        //    transform.position.y += pos.y;
-        //}
-
         public override void Kill()
         {
             alive = false;
@@ -116,7 +109,8 @@ namespace Game
 
         public void Shoot()
         {
-            BulletFactory.CreateBullet(BulletSize.normal, "bulletBote", transform, -250);
+            var bullet = BulletFactory.CreateBullet(BulletSize.normal, "bulletBote", transform, -250);
+            //cannonBullets.Add(bullet);
         }
 
         public void AddMove(Vector2 pos)

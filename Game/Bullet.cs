@@ -37,7 +37,7 @@ namespace Game
             CharactersManager.Instance.AddCharacter(this);
 
 
-            BulletManager.Instance.AddBullet(this);
+            //BulletManager.Instance.AddBullet(this);
         }
 
         public override void Update()
@@ -46,9 +46,6 @@ namespace Game
             {
                 return;
             }
-
-            //transform.position.y -= _speed * Program.deltaTime;
-
             AddMove(new Vector2 (0, -_speed * Program.deltaTime));
 
             timer += Program.deltaTime;
@@ -78,7 +75,8 @@ namespace Game
         public override void Kill()
         {
             alive = false;
-            BulletManager.Instance.RemoveBullet(this);
+            //BulletManager.Instance.RemoveBullet(this);
+            CharactersManager.Instance.RemoveCharacter(this);
         }
     }
 

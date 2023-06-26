@@ -24,8 +24,8 @@ namespace Game
         static bool victory = false;
         static bool defeat = false;
 
-        static float timer = 0;
-        static float timeLimit = 10;
+        //static float timer = 0;
+        //static float timeLimit = 10;
 
         //static float scaleShip = 1;
         //static float scaleBote = 0.4f;
@@ -43,6 +43,7 @@ namespace Game
             disparable = player;
 
             jugador = new Player("cannon", new Vector2(400, 550), 200);
+            jugador.OnLifeChanged += (life) => Defeat(life);
 
             collitions = new Collitions();
 
@@ -55,6 +56,8 @@ namespace Game
             }
         }
 
+        
+
         static void Update()
         {
 
@@ -62,8 +65,6 @@ namespace Game
             {
                 if (!victory && !defeat)
                 {
-                    //ship.AddMove(new Vector2(20 * deltaTime, 0));
-
                     jugador.Update();
 
                     var l_characters = CharactersManager.Instance.GetCharacters();
@@ -71,15 +72,14 @@ namespace Game
                     {
                         character.Update();
                     }
+                    var l_bullet = BulletManager.Instance.GetBullet();
+                    foreach (var bullet in l_bullet)
+                    {
+                        bullet.Update();
+                    }
+
 
                     collitions.Update();
-
-                    timer += deltaTime;
-                    if (timer >= timeLimit)
-                    {
-                        gameStarted = false;
-                        defeat = true;
-                    }
                 }
 
             }
@@ -101,6 +101,11 @@ namespace Game
                 {
                     character.Draw();
                 }
+
+                foreach (var bullet in BulletManager.Instance.GetBullet())
+                {
+                    bullet.Draw();
+                }
             }
             else Engine.Draw("Inicio.png", 0, 0, 1, 1, 0, 0, 0.8f);
 
@@ -116,6 +121,13 @@ namespace Game
             Engine.Show();
         }
 
+        static void Defeat(int p_life)
+        {
+            if (p_life <= 0)
+            {
+                defeat = true;
+            }
+        }
 
         static void calcDeltatime()
         {
