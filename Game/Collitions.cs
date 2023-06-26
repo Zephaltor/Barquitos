@@ -8,6 +8,12 @@ namespace Game
 {
     class Collitions
     {
+
+        //public void Start()
+        //{
+
+        //}
+
         public void Update()
         {
             //COLICIONES BALA - BARCOS
@@ -31,13 +37,16 @@ namespace Game
                         if (BoxToBoxCollition(character.Transf.position, new Vector2(character.RealWidth, character.RealHeight), char2.Transf.position, new Vector2(char2.RealWidth, char2.RealHeight)))
                         {
                             Engine.Debug("Ouch");
-                            
+                            character.GetDamage();
+
                             char2.Kill();
                         }
                     }
                 }
             }
         }
+
+
 
         private static bool BoxToBoxCollition(Vector2 positionA, Vector2 sizeA, Vector2 positionB, Vector2 sizeB)
         {

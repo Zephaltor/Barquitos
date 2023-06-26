@@ -35,5 +35,9 @@ namespace Game
         public virtual void Kill()
         {
         }
+
+        public virtual void GetDamage()
+        {
+        }
     }
 }

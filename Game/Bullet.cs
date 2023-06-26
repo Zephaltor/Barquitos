@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public class Bullet : GameObject
+    public class Bullet : GameObject, IMovible
     {
         //private Player player;
 
@@ -19,6 +19,8 @@ namespace Game
         private float timer = 0;
 
         private bool alive = true;
+
+        public float _Speed => _speed;
 
         public Bullet(string p_id, Vector2 position, float speed, float sizeMod) : base(p_id)
         {
@@ -45,7 +47,9 @@ namespace Game
                 return;
             }
 
-            transform.position.y -= _speed * Program.deltaTime;
+            //transform.position.y -= _speed * Program.deltaTime;
+
+            AddMove(new Vector2 (0, -_speed * Program.deltaTime));
 
             timer += Program.deltaTime;
 
@@ -63,6 +67,12 @@ namespace Game
             }
 
             Engine.Draw(bullet, transform.position.x, transform.position.y, 1 * _sizeMod, 1 * _sizeMod, _rot, RealWidth/2, RealHeight/2);
+        }
+
+        public void AddMove(Vector2 pos)
+        {
+            transform.position.x += pos.x;
+            transform.position.y += pos.y;
         }
 
         public override void Kill()
@@ -90,7 +100,7 @@ namespace Game
                 case BulletSize.huge:
                     return new Bullet(p_id, transform.position, vel / 2, 1f);
                 case BulletSize.tiny:
-                    return new Bullet(p_id, transform.position, vel * 2, .25f);
+                    return new Bullet(p_id, transform.position, vel, .35f);
 
             }
         }

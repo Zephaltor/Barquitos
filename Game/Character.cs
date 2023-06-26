@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    public class Character : GameObject, IDisparable
+    public class Character : GameObject, IDisparable, IMovible
     {
         Animation idle;
 
-        private float speed = 40;
+        private float _speed = 40;
 
         private float attackSpeed = 1.5f;
         private float timer = 0;
@@ -23,6 +23,8 @@ namespace Game
 
         public bool AttackCooldown => attackCooldown;
 
+        public float _Speed => _speed;
+
         //CONSTRUCTOR DE PERSONAJES
         public Character(string p_id, Vector2 initialPos, bool rightMovment) : base(p_id)
         {
@@ -30,7 +32,7 @@ namespace Game
 
             if (!rightMovment)
             {
-                speed = -speed;
+                _speed = -_speed;
                 l_rotation = 180;
             }
 
@@ -68,7 +70,7 @@ namespace Game
                 }
             }
 
-            AddMove(new Vector2(speed * Program.deltaTime, 0));
+            AddMove(new Vector2(_speed * Program.deltaTime, 0));
 
             currentAnimation.Update();
         }
@@ -100,11 +102,11 @@ namespace Game
         }
 
 
-        public void AddMove(Vector2 pos)
-        {
-            transform.position.x += pos.x;
-            transform.position.y += pos.y;
-        }
+        //public void AddMove(Vector2 pos)
+        //{
+        //    transform.position.x += pos.x;
+        //    transform.position.y += pos.y;
+        //}
 
         public override void Kill()
         {
@@ -115,6 +117,12 @@ namespace Game
         public void Shoot()
         {
             BulletFactory.CreateBullet(BulletSize.normal, "bulletBote", transform, -250);
+        }
+
+        public void AddMove(Vector2 pos)
+        {
+            transform.position.x += pos.x;
+            transform.position.y += pos.y;
         }
     }
 }
