@@ -6,18 +6,8 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    //public class GameManager
-    //{
-    //    private Player player = new Player("cannon", new Vector2(400, 550), 200);
-
-    //    player
-    //    //Player.OnLifeChanged
-    //}
-    
     public class Player : GameObject, IDisparable, IDamageable
     {
-        //static public List<Bullet> cannonBullets = new List<Bullet>();
-
         Texture cannon = new Texture("Cannon.png");
 
         private static float bulletSpeed = 400;
@@ -30,12 +20,8 @@ namespace Game
         private int life = 3;
 
         private bool attackCooldown = false;
-        private bool alive = true;
-
-
 
         public event OnLifeChanged OnLifeChanged;
-        public event OnKilled OnKilled;
 
         public float AttackSpeed => attackSpeed;
         public float Timer => timer;
@@ -43,11 +29,6 @@ namespace Game
 
         public int HitPoints => life;
         public bool AttackCooldown => attackCooldown;
-        public bool IsAlive 
-        { 
-            get => alive; 
-            set => alive = value; 
-        }
 
         public Player(string p_id, Vector2 initialPos, float speed) : base(p_id)
         {
@@ -77,11 +58,6 @@ namespace Game
             {
                 transform.position.x = -25 + cannon.Width;
             }
-
-            //for (int i = 0; i < cannonBullets.Count; i++)
-            //{
-            //    cannonBullets[i].Update();
-            //}
         }
 
         public override void Draw()
@@ -126,12 +102,6 @@ namespace Game
         public void Shoot()
         {
             BulletFactory.CreateBullet(BulletSize.tiny, "bulletCannon", transform, bulletSpeed);
-            //cannonBullets.Add(bullet);
-        }
-
-        public override void Kill()
-        {
-            OnKilled.Invoke(this);
         }
 
         public override void GetDamage()

@@ -17,20 +17,12 @@ namespace Game
         static Player jugador;
 
         static Collitions collitions;
+        static ShipCounter enemyCounter;
 
         static IDisparable disparable;
 
         static bool gameStarted = false;
-        static bool victory = false;
         static bool defeat = false;
-
-        //static float timer = 0;
-        //static float timeLimit = 10;
-
-        //static float scaleShip = 1;
-        //static float scaleBote = 0.4f;
-
-
 
 
 
@@ -45,6 +37,8 @@ namespace Game
             jugador = new Player("cannon", new Vector2(400, 550), 200);
             jugador.OnLifeChanged += (life) => Defeat(life);
 
+
+            enemyCounter = new ShipCounter();
             collitions = new Collitions();
 
             while (true)
@@ -63,8 +57,9 @@ namespace Game
 
             if (gameStarted)
             {
-                if (!victory && !defeat)
+                if (!enemyCounter.Victory && !defeat)
                 {
+                    enemyCounter.Update();
                     jugador.Update();
 
                     var l_characters = CharactersManager.Instance.GetCharacters();
@@ -77,6 +72,7 @@ namespace Game
                     {
                         bullet.Update();
                     }
+
 
 
                     collitions.Update();
@@ -109,9 +105,9 @@ namespace Game
             }
             else Engine.Draw("Inicio.png", 0, 0, 1, 1, 0, 0, 0.8f);
 
-            if (victory)
+            if (enemyCounter.Victory)
             {
-                Engine.Draw("Victoria.png", 0, 0, 1, 1, 0, 0, 0.8f);
+                Engine.Draw("Victoria.png", 0, 0, 0.9f, 0.9f, 0, 0, 0.8f);
             }
             else if (defeat)
             {

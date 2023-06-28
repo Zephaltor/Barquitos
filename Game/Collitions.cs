@@ -8,12 +8,6 @@ namespace Game
 {
     class Collitions
     {
-
-        //public void Start()
-        //{
-
-        //}
-
         public void Update()
         {
             //COLICIONES BALA - BARCOS
@@ -27,7 +21,6 @@ namespace Game
                     {
                         if (BoxToBoxCollition(character.Transf.position, new Vector2(character.RealWidth, character.RealHeight), char2.Transf.position, new Vector2(char2.RealWidth, char2.RealHeight)))
                         {
-                            Engine.Debug("IMPACTO A ESTRIBOR");
                             character.Kill();
                             char2.Kill();
                         }
@@ -38,7 +31,7 @@ namespace Game
                         {
                             char2.Kill();
 
-                            Engine.Debug("Ouch");
+                            //Engine.Debug("Ouch");
                             character.GetDamage();
                         }
                     }

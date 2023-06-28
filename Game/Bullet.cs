@@ -35,9 +35,6 @@ namespace Game
             currentAnimation = new Animation("bullet", list, 0, true);
 
             CharactersManager.Instance.AddCharacter(this);
-
-
-            //BulletManager.Instance.AddBullet(this);
         }
 
         public override void Update()
@@ -98,7 +95,7 @@ namespace Game
                 case BulletSize.huge:
                     return new Bullet(p_id, transform.position, vel / 2, 1f);
                 case BulletSize.tiny:
-                    return new Bullet(p_id, transform.position, vel, .35f);
+                    return new Bullet(p_id, transform.position, vel*1.5f, .35f);
 
             }
         }

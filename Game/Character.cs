@@ -25,7 +25,8 @@ namespace Game
 
         public float _Speed => _speed;
 
-        //CONSTRUCTOR DE PERSONAJES
+
+            //CONSTRUCTOR DE PERSONAJES
         public Character(string p_id, Vector2 initialPos, bool rightMovment) : base(p_id)
         {
             float l_rotation = 0;
@@ -35,8 +36,6 @@ namespace Game
                 _speed = -_speed;
                 l_rotation = 180;
             }
-
-            //scale = 1;
 
             idle = CreateAnimation("Idle", "Barco", 3, 1);
             transform = new Transform(initialPos, l_rotation, new Vector2(1, 1));
@@ -105,12 +104,12 @@ namespace Game
         {
             alive = false;
             CharactersManager.Instance.RemoveCharacter(this);
+            OnKilled?.Invoke();
         }
 
         public void Shoot()
         {
             var bullet = BulletFactory.CreateBullet(BulletSize.normal, "bulletBote", transform, -250);
-            //cannonBullets.Add(bullet);
         }
 
         public void AddMove(Vector2 pos)
@@ -118,5 +117,54 @@ namespace Game
             transform.position.x += pos.x;
             transform.position.y += pos.y;
         }
+
+        public void Victory()
+        {
+            Engine.Debug("Impacto");
+        }
+    }
+
+    public class ShipCounter
+    {
+        private int shipCount;
+
+        private bool counted = false;
+        private bool victory = false;
+
+        public bool Victory => victory;
+
+        public void Update()
+        {
+            if (!counted)
+            {
+                Counter();
+                counted = true;
+            }
+        }
+
+        public void Counter()
+        {
+            var l_characters = CharactersManager.Instance.GetCharacters();
+            foreach (var character in l_characters)
+            {
+                if(character.ID == "bote")
+                {
+                    shipCount++;
+                    character.OnKilled += VictoryCheck;
+                }
+            }
+        }
+        public void VictoryCheck()
+        {
+            shipCount -= 1;
+
+            Engine.Debug(shipCount);
+            if (shipCount <= 0)
+            {
+                victory = true;
+                Engine.Debug("Ganaste");
+            }
+        }
+
     }
 }
