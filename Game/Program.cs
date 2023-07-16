@@ -18,7 +18,7 @@ namespace Game
         static Player jugador;
 
         static Collitions collitions;
-        static ShipCounter enemyCounter;
+        static GameManager gameManager;
 
         static IDisparable disparable;
 
@@ -40,7 +40,7 @@ namespace Game
             jugador.OnLifeChanged += (life) => Defeat(life);
 
 
-            enemyCounter = new ShipCounter();
+            gameManager = new GameManager();
             collitions = new Collitions();
 
             while (true)
@@ -59,9 +59,9 @@ namespace Game
 
             if (gameStarted)
             {
-                if (!enemyCounter.Victory && !defeat)
+                if (!gameManager.Victory && !defeat)
                 {
-                    enemyCounter.Update();
+                    gameManager.Update();
                     jugador.Update();
 
                     var l_characters = CharactersManager.Instance.GetCharacters();
@@ -107,7 +107,7 @@ namespace Game
             }
             else Engine.Draw("Inicio.png", 0, 0, 1, 1, 0, 0, 0.8f);
 
-            if (enemyCounter.Victory)
+            if (gameManager.Victory)
             {
                 Engine.Draw("Victoria.png", 0, 0, 0.9f, 0.9f, 0, 0, 0.8f);
             }
