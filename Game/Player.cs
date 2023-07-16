@@ -9,13 +9,16 @@ namespace Game
     public class Player : GameObject, IDisparable, IDamageable
     {
         Texture cannon = new Texture("Cannon.png");
+        Texture prueba = new Texture("0.png");
+
+        private ElementPool<Bullet> bulletPool = new ElementPool<Bullet>(BulletFactory.createPlayerBullet);
 
         private static float bulletSpeed = 400;
 
         private float p_speed;
-
         private float attackSpeed = 0.5f;
         private float timer = 0;
+        private float lifePosition;
 
         private int life = 3;
 
@@ -46,6 +49,8 @@ namespace Game
 
         public override void Update()
         {
+            //bulletPool.Update();
+
             timer += Program.deltaTime;
 
             Input();
@@ -62,7 +67,16 @@ namespace Game
 
         public override void Draw()
         {
+            lifePosition = 700;
+
             Engine.Draw(cannon, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, 0, RealWidth / 2, RealHeight / 2);
+
+            for (int i = 0; i < life; i++)
+            {
+                Engine.Draw(prueba, lifePosition, 20, 0.5f, 0.5f, 0, 0, 0);
+
+                lifePosition -= 50;
+            }
         }
 
         public void Move(float velocity)
@@ -101,7 +115,16 @@ namespace Game
 
         public void Shoot()
         {
-            BulletFactory.CreateBullet(BulletSize.tiny, "bulletCannon", transform, bulletSpeed);
+            var bullet = bulletPool.GetEelement();
+            bullet.SetPosition(new Vector2(transform.position.x, transform.position.y));
+            bullet.OnCollition += ReleaseBullet;
+            CharactersManager.Instance.AddCharacter(bullet);
+        }
+
+        private void ReleaseBullet(Bullet bullet)
+        {
+            bulletPool.ReleaseObject(bullet);
+            bullet.OnCollition -= ReleaseBullet;
         }
 
         public override void GetDamage()

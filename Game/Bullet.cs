@@ -15,19 +15,22 @@ namespace Game
         private float _speed;
         private float _rot = 0;
         private float _sizeMod;
-        private float lifeTime = 3;
+        private float lifeTime;
         private float timer = 0;
 
         private bool alive = true;
 
         public float _Speed => _speed;
 
-        public Bullet(string p_id, Vector2 position, float speed, float sizeMod) : base(p_id)
+        public event Action<Bullet> OnCollition;
+
+        public Bullet(string p_id, float speed, float sizeMod) : base(p_id)
         {
-            transform = new Transform(position, 0, new Vector2(1, 1));
+            transform = new Transform(new Vector2(0, 0), 0, new Vector2(1, 1));
             _speed = speed;
             _sizeMod = sizeMod;
 
+            lifeTime = 3;
 
             List<Texture> list = new List<Texture>();
             list.Add(bullet);
@@ -39,10 +42,6 @@ namespace Game
 
         public override void Update()
         {
-            if (!alive)
-            {
-                return;
-            }
             AddMove(new Vector2 (0, -_speed * Program.deltaTime));
 
             timer += Program.deltaTime;
@@ -50,15 +49,16 @@ namespace Game
             if (timer >= lifeTime)
             {
                 alive = false;
+                Kill();
             }
         }
 
         public override void Draw()
         {
-            if (!alive)
-            {
-                return;
-            }
+            //if (!alive)
+            //{
+            //    return;
+            //}
 
             Engine.Draw(bullet, transform.position.x, transform.position.y, 1 * _sizeMod, 1 * _sizeMod, _rot, RealWidth/2, RealHeight/2);
         }
@@ -71,9 +71,12 @@ namespace Game
 
         public override void Kill()
         {
-            alive = false;
+            //alive = false;
+            lifeTime = 3;
+            timer = 0;
             //BulletManager.Instance.RemoveBullet(this);
             CharactersManager.Instance.RemoveCharacter(this);
+            OnCollition?.Invoke(this);
         }
     }
 
@@ -85,17 +88,18 @@ namespace Game
     }
     public static class BulletFactory
     {
-        public static Bullet CreateBullet(BulletSize p_size, string p_id, Transform transform, float vel)
+        public static Bullet createPlayerBullet() => CreateBullet();
+        public static Bullet CreateBullet(BulletSize p_size = BulletSize.tiny, string p_id = "bulletCannon")
         {
 
             switch (p_size)
             {
                 default:
-                    return new Bullet(p_id, transform.position, vel, .5f);
+                    return new Bullet(p_id, -400, .5f);
                 case BulletSize.huge:
-                    return new Bullet(p_id, transform.position, vel / 2, 1f);
+                    return new Bullet(p_id, -400 / 2, 1f);
                 case BulletSize.tiny:
-                    return new Bullet(p_id, transform.position, vel*1.5f, .35f);
+                    return new Bullet(p_id, 400 * 1.5f, .35f);
 
             }
         }

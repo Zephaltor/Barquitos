@@ -41,5 +41,10 @@ namespace Game
         public virtual void GetDamage()
         {
         }
+
+        public void SetPosition(Vector2 newPos)
+        {
+            transform.position = newPos;
+        }
     }
 }

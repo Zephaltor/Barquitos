@@ -14,7 +14,10 @@ namespace Game
 
         public void AddCharacter(GameObject p_newCharacter)
         {
-            characters.Add(p_newCharacter);
+            if (!characters.Contains(p_newCharacter))
+            {
+                characters.Add(p_newCharacter);
+            }
         }
 
         public void RemoveCharacter(GameObject p_newCharacter)

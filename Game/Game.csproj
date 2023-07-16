@@ -41,6 +41,7 @@
     <Compile Include="Bote.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="BulletManager.cs" />
+    <Compile Include="BulletPool.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="CharactersManager.cs" />
     <Compile Include="Collitions.cs" />

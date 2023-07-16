@@ -11,6 +11,7 @@ namespace Game
 
         static Character player;
         static Character ship;
+        static Character ship2;
 
         static Bote bote;
 
@@ -31,6 +32,7 @@ namespace Game
             Engine.Initialize();
             player = new Character("bote", new Vector2(100, 100), true);
             ship = new Character("bote", new Vector2(150, 150), false);
+            ship2 = new Character("bote", new Vector2(400, 210), true);
             bote = new Bote("bote", new Vector2(600, 50), false);
             disparable = player;
 

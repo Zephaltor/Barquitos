@@ -109,7 +109,8 @@ namespace Game
 
         public void Shoot()
         {
-            var bullet = BulletFactory.CreateBullet(BulletSize.normal, "bulletBote", transform, -250);
+            var bullet = BulletFactory.CreateBullet(BulletSize.normal, "bulletBote");
+            bullet.SetPosition(new Vector2(transform.position.x, transform.position.y));
         }
 
         public void AddMove(Vector2 pos)
@@ -126,7 +127,7 @@ namespace Game
 
     public class ShipCounter
     {
-        private int shipCount;
+        private int shipCount = 3;
 
         private bool counted = false;
         private bool victory = false;
@@ -149,7 +150,7 @@ namespace Game
             {
                 if(character.ID == "bote")
                 {
-                    shipCount++;
+                    //shipCount++;
                     character.OnKilled += VictoryCheck;
                 }
             }
@@ -162,7 +163,7 @@ namespace Game
             if (shipCount <= 0)
             {
                 victory = true;
-                Engine.Debug("Ganaste");
+                //Engine.Debug("Ganaste");
             }
         }
 
