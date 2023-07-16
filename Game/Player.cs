@@ -9,7 +9,7 @@ namespace Game
     public class Player : GameObject, IDisparable, IDamageable
     {
         Texture cannon = new Texture("Cannon.png");
-        Texture prueba = new Texture("0.png");
+        Texture prueba = new Texture("corazon2.png");
 
         private ElementPool<Bullet> bulletPool = new ElementPool<Bullet>(BulletFactory.createPlayerBullet);
 
@@ -67,15 +67,15 @@ namespace Game
 
         public override void Draw()
         {
-            lifePosition = 700;
+            lifePosition = 750;
 
             Engine.Draw(cannon, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, 0, RealWidth / 2, RealHeight / 2);
 
             for (int i = 0; i < life; i++)
             {
-                Engine.Draw(prueba, lifePosition, 20, 0.5f, 0.5f, 0, 0, 0);
+                Engine.Draw(prueba, lifePosition, 10, 1, 1, 0, 0, 0);
 
-                lifePosition -= 50;
+                lifePosition -= 55;
             }
         }
 

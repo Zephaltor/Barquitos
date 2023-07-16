@@ -25,8 +25,6 @@ namespace Game
         static bool gameStarted = false;
         static bool defeat = false;
 
-
-
         static void Main(string[] args)
         {
             Engine.Initialize();
@@ -69,19 +67,11 @@ namespace Game
                     {
                         character.Update();
                     }
-                    var l_bullet = BulletManager.Instance.GetBullet();
-                    foreach (var bullet in l_bullet)
-                    {
-                        bullet.Update();
-                    }
-
-
-
                     collitions.Update();
                 }
 
             }
-            else if (Engine.GetKey(Keys.K)) gameStarted = true;
+            else if (Engine.GetKey(Keys.I)) gameStarted = true;
         }
 
         static void Draw()
@@ -105,15 +95,15 @@ namespace Game
                     bullet.Draw();
                 }
             }
-            else Engine.Draw("Inicio.png", 0, 0, 1, 1, 0, 0, 0.8f);
+            else Engine.Draw("Inicio2.png", 0, 0, 1, 1, 0, 0, 0.8f);
 
             if (gameManager.Victory)
             {
-                Engine.Draw("Victoria.png", 0, 0, 0.9f, 0.9f, 0, 0, 0.8f);
+                Engine.Draw("Victoria2.png", 0, 0, 1, 1, 0, 0, 0.8f);
             }
             else if (defeat)
             {
-                Engine.Draw("Derrota.png", 0, 0, 1, 1, 0, 0, 0.8f);
+                Engine.Draw("Derrota2.png", 0, 0, 1, 1, 0, 0, 0.8f);
             }
 
             Engine.Show();

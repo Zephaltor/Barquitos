@@ -55,11 +55,6 @@ namespace Game
 
         public override void Draw()
         {
-            //if (!alive)
-            //{
-            //    return;
-            //}
-
             Engine.Draw(bullet, transform.position.x, transform.position.y, 1 * _sizeMod, 1 * _sizeMod, _rot, RealWidth/2, RealHeight/2);
         }
 
@@ -71,10 +66,9 @@ namespace Game
 
         public override void Kill()
         {
-            //alive = false;
             lifeTime = 3;
             timer = 0;
-            //BulletManager.Instance.RemoveBullet(this);
+
             CharactersManager.Instance.RemoveCharacter(this);
             OnCollition?.Invoke(this);
         }
