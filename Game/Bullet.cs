@@ -18,7 +18,7 @@ namespace Game
         private float lifeTime;
         private float timer = 0;
 
-        private bool alive = true;
+        //private bool alive = true;
 
         public float _Speed => _speed;
 
@@ -48,7 +48,7 @@ namespace Game
 
             if (timer >= lifeTime)
             {
-                alive = false;
+                //alive = false;
                 Kill();
             }
         }

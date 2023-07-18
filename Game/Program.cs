@@ -9,11 +9,11 @@ namespace Game
         public static float deltaTime;
         static DateTime lastFrameTime = DateTime.Now;
 
-        static Character player;
-        static Character ship;
-        static Character ship2;
+        //static Character player;
+        //static Character ship;
+        //static Character ship2;
 
-        static Bote bote;
+        //static Bote bote;
 
         static Player jugador;
 
@@ -33,11 +33,11 @@ namespace Game
         static void Main(string[] args)
         {
             Engine.Initialize();
-            player = new Character("bote", new Vector2(100, 100), true);
-            ship = new Character("bote", new Vector2(150, 150), false);
-            ship2 = new Character("bote", new Vector2(400, 210), true);
-            bote = new Bote("bote", new Vector2(600, 50), false);
-            disparable = player;
+            //player = new Character("bote", new Vector2(100, 100), true);
+            //ship = new Character("bote", new Vector2(150, 150), false);
+            //ship2 = new Character("bote", new Vector2(400, 210), true);
+            //bote = new Bote("bote", new Vector2(600, 50), false);
+            //disparable = player;
 
             jugador = new Player("cannon", new Vector2(400, 550), 200);
             jugador.OnLifeChanged += (life) => Defeat(life);

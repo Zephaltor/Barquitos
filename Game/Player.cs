@@ -13,10 +13,10 @@ namespace Game
 
         private ElementPool<Bullet> bulletPool = new ElementPool<Bullet>(BulletFactory.createPlayerBullet);
 
-        private static float bulletSpeed = 400;
+        //private static float bulletSpeed = 400;
 
         private float p_speed;
-        private float attackSpeed = 0.5f;
+        private float attackSpeed = 1;
         private float timer = 0;
         private float lifePosition;
 

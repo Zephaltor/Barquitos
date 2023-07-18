@@ -10,26 +10,31 @@ namespace Game
     {
         Animation idle;
 
-        private float _speed = 40;
-
-        private float attackSpeed = 1.5f;
+        private float _speed;
+        private float _attackSpeed = 1.5f;
         private float timer = 0;
+        private float _sizeMod;
 
         private bool alive = true;
         private bool attackCooldown = true;
 
-        public float AttackSpeed => attackSpeed;
+        public float AttackSpeed => _attackSpeed;
         public float Timer => timer;
 
         public bool AttackCooldown => attackCooldown;
 
         public float _Speed => _speed;
 
+        //public event Action<Character> OnCollition;
+
 
         //CONSTRUCTOR DE PERSONAJES
-        public Character(string p_id, Vector2 initialPos, bool rightMovment) : base(p_id)
+        public Character(string p_id, float sizeMod, bool rightMovment, float speed, float attackSpeed) : base(p_id)
         {
             float l_rotation = 0;
+            _sizeMod = sizeMod;
+            _speed = speed;
+            _attackSpeed = attackSpeed;
 
             if (!rightMovment)
             {
@@ -38,7 +43,7 @@ namespace Game
             }
 
             idle = CreateAnimation("Idle", "Barco", 3, 1);
-            transform = new Transform(initialPos, l_rotation, new Vector2(1, 1));
+            transform = new Transform(new Vector2(0, 0), l_rotation, new Vector2(_sizeMod, _sizeMod));
 
             currentAnimation = idle;
             currentAnimation.Reset();
@@ -55,7 +60,7 @@ namespace Game
 
             timer += Program.deltaTime;
 
-            if (timer >= attackSpeed)
+            if (timer >= _attackSpeed)
             {
                 attackCooldown = false;
                 timer = 0;
@@ -81,7 +86,7 @@ namespace Game
                 return;
             }
 
-            Engine.Draw(currentAnimation.CurrentFrame, transform.position.x, transform.position.y, transform.scale.x, transform.scale.y, transform.rotation, RealWidth / 2f, RealHeight / 2f);
+            Engine.Draw(currentAnimation.CurrentFrame, transform.position.x, transform.position.y, 1 * _sizeMod, 1 * _sizeMod, transform.rotation, RealWidth / 2f, RealHeight / 2f);
         }
 
 
@@ -119,9 +124,9 @@ namespace Game
             transform.position.y += pos.y;
         }
 
-        public void Victory()
-        {
-            Engine.Debug("Impacto");
-        }
+        //public void Victory()
+        //{
+        //    //Engine.Debug("Impacto");
+        //}
     }
 }
