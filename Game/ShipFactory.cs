@@ -14,7 +14,6 @@ namespace Game
     }
     public static class ShipFactory
     {
-       //public static Character CreateGameShip() => CreateShip();
         public static Character CreateShip(ShipType p_type, bool rMovent)
         {
             string p_id = "bote";

@@ -7,16 +7,6 @@ using System.Threading.Tasks;
 namespace Game
 {
     public delegate void OnLifeChanged(int p_currentLife);
-    //public delegate void OnKilled(IKilleable p_killedObject);
-    
-    //public interface IKilleable
-    //{
-    //    bool IsAlive { get; set; }
-
-    //    event OnKilled OnKilled;
-
-    //    void Kill();
-    //}
     
     public interface IDamageable
     {

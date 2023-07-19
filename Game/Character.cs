@@ -25,8 +25,6 @@ namespace Game
 
         public float _Speed => _speed;
 
-        //public event Action<Character> OnCollition;
-
 
         //CONSTRUCTOR DE PERSONAJES
         public Character(string p_id, float sizeMod, bool rightMovment, float speed, float attackSpeed) : base(p_id)

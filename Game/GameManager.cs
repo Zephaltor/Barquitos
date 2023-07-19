@@ -52,7 +52,7 @@ namespace Game
         {
             shipCount -= 1;
 
-            Engine.Debug(shipCount);
+            //Engine.Debug(shipCount);
             if (shipCount <= 0)
             {
                 victory = true;
