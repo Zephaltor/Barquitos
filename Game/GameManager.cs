@@ -10,7 +10,6 @@ namespace Game
     {
         private int shipCount = 16;
 
-        //private bool counted = false;
         private bool victory = false;
 
         Vector2 posSpawn1 = new Vector2(-50, 200);
@@ -43,20 +42,15 @@ namespace Game
                 _timer = 0;
                 //counter++;
             }
-
-
-            //Engine.Debug(counter);
         }
 
         public void VictoryCheck()
         {
             shipCount -= 1;
 
-            //Engine.Debug(shipCount);
             if (shipCount <= 0)
             {
                 victory = true;
-                //Engine.Debug("Ganaste");
             }
         }
 

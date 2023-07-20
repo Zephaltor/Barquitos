@@ -24,7 +24,7 @@ namespace Game
 
         static bool gameStarted = false;
         static bool drawVictory = true;
-        static bool defeat = false;
+        public static bool defeat = false;
         static bool drawDefeat = true;
         static bool credits = false;
 
@@ -134,7 +134,7 @@ namespace Game
             Engine.Show();
         }
 
-        static void Defeat(int p_life)
+        static public void Defeat(int p_life)
         {
             if (p_life <= 0)
             {
@@ -142,7 +142,7 @@ namespace Game
             }
         }
 
-        static void calcDeltatime()
+        static public void calcDeltatime()
         {
             TimeSpan deltaSpan = DateTime.Now - lastFrameTime;
             deltaTime = (float)deltaSpan.TotalSeconds;

@@ -121,10 +121,5 @@ namespace Game
             transform.position.x += pos.x;
             transform.position.y += pos.y;
         }
-
-        //public void Victory()
-        //{
-        //    //Engine.Debug("Impacto");
-        //}
     }
 }
