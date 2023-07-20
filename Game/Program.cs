@@ -20,7 +20,7 @@ namespace Game
         static Collitions collitions;
         static GameManager gameManager;
 
-        static IDisparable disparable;
+        //static IDisparable disparable;
 
         static bool gameStarted = false;
         static bool drawVictory = true;

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    class GameManager
+    public class GameManager
     {
-        private int shipCount = 16;
+        private int shipCount = 24;
 
         private bool victory = false;
 
@@ -41,6 +41,7 @@ namespace Game
 
                 _timer = 0;
                 //counter++;
+                spawnTime -= 0.2f;
             }
         }
 

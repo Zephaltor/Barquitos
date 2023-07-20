@@ -132,5 +132,11 @@ namespace Game
             life -= 1;
             OnLifeChanged.Invoke(life);
         }
+
+        public void GetDamageTest()
+        {
+            life -= 1;
+        }
+
     }
 }

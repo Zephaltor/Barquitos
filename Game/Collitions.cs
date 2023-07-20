@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Game
 {
-    class Collitions
+    public class Collitions
     {
         public void Update()
         {
@@ -41,7 +41,7 @@ namespace Game
 
 
 
-        private static bool BoxToBoxCollition(Vector2 positionA, Vector2 sizeA, Vector2 positionB, Vector2 sizeB)
+        public bool BoxToBoxCollition(Vector2 positionA, Vector2 sizeA, Vector2 positionB, Vector2 sizeB)
         {
             float distanceX = Math.Abs(positionA.x - positionB.x);
             float distanceY = Math.Abs(positionA.y - positionB.y);
