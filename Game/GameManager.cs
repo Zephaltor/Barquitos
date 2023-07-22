@@ -8,7 +8,7 @@ namespace Game
 {
     public class GameManager
     {
-        private int shipCount = 24;
+        private int shipCount = 18;
 
         private bool victory = false;
 
@@ -41,7 +41,8 @@ namespace Game
 
                 _timer = 0;
                 //counter++;
-                spawnTime -= 0.2f;
+
+                if (spawnTime > 1) spawnTime -= 0.2f;
             }
         }
 
